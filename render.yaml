@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: roblox-ccu-934104263
+    runtime: python
+    plan: free
+    buildCommand: "echo No extra dependencies"
+    startCommand: "python server.py"

@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d17">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <title>Studio Pulse — Community Analytics</title>
+  <style>
+    :root{color-scheme:dark;--bg:#090c13;--surface:#111621;--surface2:#161c29;--line:#272e3d;--text:#f3f5fc;--muted:#8995ad;--dim:#65728b;--purple:#8b7bff;--cyan:#5ddbd0;--green:#46dfac;--red:#ff8e98;font-family:Inter,"Segoe UI",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);min-height:100vh;background:radial-gradient(ellipse 60% 44% at 69% -13%,rgba(93,70,203,.17),transparent 85%),var(--bg);font-size:14px;-webkit-font-smoothing:antialiased}
+    button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible{outline:2px solid #a89cff;outline-offset:4px}
+    .app{display:flex;max-width:1800px;margin:auto;min-height:100vh}.sidebar{width:242px;flex:none;border-right:1px solid #212734;background:rgba(12,16,25,.78);padding:30px 19px 24px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+    .brand{display:flex;gap:12px;align-items:center;padding:2px 9px 31px;font-size:17px;letter-spacing:-.05em;font-weight:850}.brand span b{font-weight:850}.brand span em{font-style:normal;color:#a99dff}.brand-mark{background:linear-gradient(135deg,#9a8bff,#6157ea);border-radius:11px;box-shadow:0 8px 24px #6957ec31;width:37px;height:37px;display:grid;place-items:center;flex-shrink:0}.brand-mark svg{width:24px;height:24px}
+    .nav-caption{font-size:10px;letter-spacing:.18em;font-weight:800;color:#69758a;padding:0 15px;margin:16px 0}.nav-link{display:flex;align-items:center;gap:13px;padding:13px 14px;border-radius:11px;color:#8d9bb0;font-weight:650;transition:.15s background,.15s color;margin-bottom:5px}.nav-link svg{width:18px;height:18px;stroke-width:1.8}.nav-link:hover{background:#181f2f;color:#f8f9ff}.nav-link.active{background:#26223f;color:#c0b8ff;box-shadow:inset 0 0 0 1px #453a79}.nav-link.active svg{color:#a798ff}.nav-link.external{margin-top:4px}
+    .side-bottom{margin-top:auto}.mini-card{background:linear-gradient(145deg,#1b1c31,#121b2b);border:1px solid #302d51;border-radius:16px;padding:17px 15px;margin-bottom:17px}.mini-card .mini-icon{width:30px;height:30px;border-radius:9px;background:#7362e82d;color:#b3aaff;display:grid;place-items:center;font-weight:900;margin-bottom:12px}.mini-card strong{display:block;font-size:13px;margin-bottom:5px}.mini-card small{display:block;color:#909eb8;line-height:1.6;font-size:11px}.mini-card code{color:#c6bfff;font-family:inherit}.sidebar-footer{font-size:11px;color:#5f6c80;padding:0 10px}
+    .content{min-width:0;flex:1;padding:0 clamp(24px,3.5vw,60px) 60px;max-width:1490px;margin:0 auto;width:100%}.topbar{height:101px;border-bottom:1px solid #202633;display:flex;align-items:center;justify-content:space-between;gap:14px}.breadcrumb{display:flex;align-items:center;gap:12px;color:#8491a8;font-weight:600;font-size:13px}.breadcrumb .sep{color:#434d60}.breadcrumb .current{color:#e8ecfa}.toolbar{display:flex;align-items:center;gap:12px}.live-chip{display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:9px;border:1px solid #2b4945;background:rgba(43,120,103,.11);color:#8be7c5;font-size:12px;font-weight:750}.dot{height:7px;width:7px;background:var(--green);border-radius:100%;box-shadow:0 0 0 4px #2bc99716,0 0 11px #2eeca872}.live-chip.delayed{color:#ffceb0;background:#a76a2116;border-color:#684c2c}.live-chip.delayed .dot{background:#ffb76e;box-shadow:0 0 0 4px #b9702514}.live-chip.offline{color:#ffb6b6;background:#a63c4216;border-color:#68313d}.live-chip.offline .dot{background:#ff858b;box-shadow:none}
+    .icon-btn{display:flex;align-items:center;justify-content:center;gap:9px;background:#181e2c;border:1px solid #30384b;color:#e5eafa;border-radius:10px;padding:9px 13px;font-size:12px;font-weight:750;transition:.17s}.icon-btn:hover{background:#252c3d;border-color:#606a88}.icon-btn svg{height:16px;width:16px}.icon-btn:disabled{opacity:.55;cursor:default}.spin{animation:rotate 1s linear infinite}@keyframes rotate{to{transform:rotate(360deg)}}
+    .page-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:40px 0 25px}.eyebrow{display:flex;gap:9px;align-items:center;color:#a899ff;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px}.eyebrow:before{content:"";width:17px;height:2px;background:#8e7aff;display:block}h1{font-size:clamp(30px,3.5vw,42px);font-weight:800;letter-spacing:-.052em;margin:0 0 9px;line-height:1.12}h1 .soft{color:#9eabc2}p{margin:0;color:var(--muted);line-height:1.6}.community-link{border:1px solid #333b4e;background:#151b28;padding:11px 15px;border-radius:10px;display:flex;gap:8px;align-items:center;white-space:nowrap;color:#b9c5d9;font-size:12px;font-weight:650;transition:.2s}.community-link svg{width:15px;height:15px}.community-link:hover{border-color:#8b7bff;color:white}
+    .error-banner{display:none;align-items:center;gap:11px;padding:12px 15px;background:#502a361a;border:1px solid #6e3c4a;border-radius:10px;color:#ffc0c3;margin-bottom:16px;line-height:1.5}.error-banner.show{display:flex}.error-banner svg{flex-shrink:0;width:18px;height:18px}
+    .kpis{display:grid;grid-template-columns:1.65fr 1fr 1fr;gap:16px}.card{background:linear-gradient(162deg,#151b27,#111722 76%);border:1px solid #293143;border-radius:17px;position:relative;overflow:hidden}.kpi{min-height:204px;padding:24px 25px}.kpi.hero{background:radial-gradient(circle at 94% -5%,rgba(130,105,255,.22),transparent 50%),linear-gradient(145deg,#1b1c37,#14192a 65%);border-color:#3c375c}.kpi.hero:after{content:"";position:absolute;width:220px;height:220px;right:-113px;bottom:-149px;background:radial-gradient(circle,#8272ff42,transparent 68%);pointer-events:none}.kpi-label{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#a5b0c7;font-size:12px;font-weight:650}.kpi-label svg{width:17px;height:17px;color:#7987a2}.kpi.hero .kpi-label svg{color:#aaa2ff}.kpi-main{font-size:clamp(36px,4vw,59px);font-weight:790;letter-spacing:-.065em;font-variant-numeric:tabular-nums;margin-top:20px;line-height:1.18}.kpi-main.sm{font-size:clamp(30px,2.65vw,43px);margin-top:24px}.kpi-sub{font-size:12px;color:#8290a8;margin-top:12px;display:flex;align-items:center;gap:8px;min-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.kpi-sub>span{overflow:hidden;text-overflow:ellipsis}.delta{font-weight:800;color:#55e0b2}.delta.negative{color:#ffadab}.delta.neutral{color:#9aabc3}.kpi-signal{position:absolute;top:0;right:0;height:3px;width:34%;background:linear-gradient(90deg,transparent,#9184fb)}
+    .middle{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(285px,1fr);gap:17px;margin-top:18px}.chart-panel,.leaders{padding:25px 26px 22px}.panel-head{display:flex;align-items:start;justify-content:space-between;gap:16px}.section-kicker{font-size:11px;letter-spacing:.11em;font-weight:780;text-transform:uppercase;color:#79869e;margin-bottom:8px}.panel-head h2{font-size:19px;letter-spacing:-.03em;margin:0;line-height:1.2}.range-tabs{display:flex;gap:2px;background:#0c111c;padding:4px;border:1px solid #2c3547;border-radius:9px}.range-tabs button{background:transparent;border:0;border-radius:6px;padding:7px 10px;color:#77849d;font-size:11px;font-weight:750}.range-tabs button.active{background:#2c2a4d;color:#c6beff}.chart-info{margin-top:24px;display:flex;align-items:center;gap:17px;flex-wrap:wrap}.chart-value{font-weight:770;letter-spacing:-.05em;font-size:30px;font-variant-numeric:tabular-nums}.chart-change{font-size:12px;color:#9aa7c0;display:flex;gap:5px;align-items:center}.chart-holder{height:207px;margin-top:13px;position:relative}.chart-holder svg{width:100%;height:100%;display:block;overflow:visible}.chart-overlay{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;pointer-events:none;font-size:13px;text-align:center;color:#76849e;line-height:1.7;max-width:235px;margin:auto}.chart-axis{display:flex;justify-content:space-between;font-size:10px;color:#6e7d95;margin-top:9px;font-variant-numeric:tabular-nums}.chart-footer{border-top:1px solid #252d3d;margin-top:19px;padding-top:14px;font-size:11px;color:#77859a;display:flex;gap:7px;align-items:center}.chart-footer svg{width:14px;height:14px;color:#8e81f6}
+    .leaders .panel-head{margin-bottom:22px}.leader-row{display:flex;gap:11px;align-items:center;padding:12px 0;border-bottom:1px solid #252c3a}.leader-row:last-child{border-bottom:none}.thumb{width:42px;height:42px;flex:none;border-radius:11px;background:linear-gradient(140deg,#373559,#222c48);border:1px solid #444763;display:grid;place-items:center;color:#c0bdff;object-fit:cover;font-size:17px;font-weight:800}.leader-info{min-width:0;flex:1}.leader-name{font-size:12px;font-weight:720;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.leader-caption{font-size:11px;color:#76849b;margin-top:5px}.leader-count{font-variant-numeric:tabular-nums;font-size:13px;font-weight:790;white-space:nowrap}.leader-empty{padding:38px 0;color:#74849c;font-size:12px;text-align:center}.leader-foot{margin-top:14px;font-size:11px;color:#74849e}
+    .list-section{margin-top:35px}.list-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:17px}.list-title h2{margin:0;font-size:20px;letter-spacing:-.035em}.list-title p{font-size:12px;margin-top:5px}.updated{font-size:12px;color:#8290a9;white-space:nowrap;display:flex;align-items:center;gap:8px}.updated:before{content:"";width:7px;height:7px;border-radius:50%;background:#7c72da}
+    .table-wrap{overflow:hidden}.table-head{display:grid;grid-template-columns:minmax(260px,1fr) 145px 120px 155px 44px;gap:18px;align-items:center;padding:16px 23px;background:#171e2c;color:#71809a;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid #293143}.game-row{display:grid;grid-template-columns:minmax(260px,1fr) 145px 120px 155px 44px;align-items:center;gap:18px;padding:17px 23px;border-bottom:1px solid #252c3b;transition:background .12s}.game-row:last-child{border-bottom:none}.game-row:hover{background:#1a2130}.game-identity{display:flex;align-items:center;gap:13px;min-width:0}.number{font-size:11px;color:#6d7b93;width:18px;flex:none;font-variant-numeric:tabular-nums}.game-row .thumb{width:46px;height:46px;border-radius:10px}.identity-text{min-width:0}.game-name{display:block;font-size:13px;font-weight:750;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;max-width:100%}.game-details{margin-top:5px;color:#71809a;font-size:11px}.player-count{font-size:16px;font-weight:820;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.player-count span{font-size:10px;font-weight:600;color:#74859c;margin-left:5px}.visits{color:#a2aec2;font-size:12px;font-variant-numeric:tabular-nums}.share{font-size:12px;color:#a7b2c7;font-variant-numeric:tabular-nums}.bar{margin-top:8px;height:4px;background:#2a3348;border-radius:10px;overflow:hidden;width:100%}.bar span{height:100%;display:block;border-radius:10px;background:linear-gradient(90deg,#7265fa,#67d0cc);min-width:0;transition:width .5s}.open-btn{height:32px;width:32px;display:grid;place-items:center;border:1px solid transparent;border-radius:8px;color:#8091ad}.open-btn svg{width:16px;height:16px}.open-btn:hover{background:#2d3450;border-color:#424b6a;color:#c5c8ff}.empty{padding:70px 25px;color:#7f8da4;text-align:center;line-height:1.7}.foot{padding-top:25px;font-size:11px;color:#64748c;display:flex;justify-content:space-between;gap:20px;align-items:center;line-height:1.55}.foot strong{color:#8d9ab1;font-weight:650}
+    .skeleton{display:inline-block;width:65%;height:1em;background:linear-gradient(100deg,#293247,#343b56,#293247);background-size:200% 100%;animation:shimmer 1.7s linear infinite;border-radius:7px}@keyframes shimmer{to{background-position-x:-200%}}
+    @media(max-width:1280px){.sidebar{width:204px;padding-left:13px;padding-right:13px}.content{padding-left:30px;padding-right:30px}.table-head,.game-row{grid-template-columns:minmax(210px,1fr) 120px 96px 110px 32px;gap:13px}.middle{grid-template-columns:minmax(0,1.4fr) minmax(250px,1fr)}}
+    @media(max-width:1040px){.sidebar{width:74px;padding:20px 12px}.brand{padding:0 5px 34px}.brand span,.nav-caption,.nav-link span,.mini-card,.sidebar-footer{display:none}.nav-link{justify-content:center;padding:13px}.nav-link svg{flex:none}.content{padding-left:25px;padding-right:25px}.middle{grid-template-columns:1fr}.leaders{display:block}.leader-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.leader-row{border-bottom:0}.leader-foot{margin-top:8px}}
+    @media(max-width:760px){.sidebar{display:none}.content{padding:0 17px 35px}.topbar{height:75px}.breadcrumb{font-size:12px}.page-head{margin:29px 0 23px;align-items:start}.page-head .community-link{display:none}h1{font-size:34px}.kpis{grid-template-columns:1fr 1fr;gap:10px}.kpi{min-height:160px;padding:19px}.kpi.hero{grid-column:span 2;min-height:183px}.kpi-main{margin-top:13px;font-size:52px}.kpi-main.sm{font-size:30px;margin-top:25px}.kpi-sub{font-size:10px}.middle{margin-top:12px;gap:12px}.chart-panel,.leaders{padding:20px}.chart-holder{height:185px}.leader-list{grid-template-columns:1fr;gap:0}.leader-row{border-bottom:1px solid #252d3c}.leader-row:last-child{border-bottom:0}.list-section{margin-top:30px}.table-head{display:none}.game-row{grid-template-columns:minmax(0,1fr) auto 26px;gap:12px;padding:16px}.game-row .visits,.game-row .share{display:none}.game-row .player-count{font-size:15px;text-align:right}.game-row .player-count span{display:none}.game-row .thumb{width:43px;height:43px}.game-identity{gap:9px}.number{width:16px}.updated{font-size:10px}.foot{display:block}.foot span{display:block;margin-bottom:5px}}
+    @media(max-width:410px){.live-chip{padding:8px 10px}.icon-btn{padding:8px}.icon-btn .label{display:none}.breadcrumb{gap:7px}.chart-panel .panel-head{display:block}.range-tabs{margin-top:16px;width:max-content}.chart-info{margin-top:14px}.kpi.hero{min-height:170px}.kpi-main{font-size:44px}.game-row .thumb{width:39px;height:39px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13h4l4-8 5 14 4-8h3"/></svg></div><span><b>studio</b><em>pulse</em></span></div>
+      <div class="nav-caption">WORKSPACE</div>
+      <a class="nav-link active" href="#overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Overview</span></a>
+      <a class="nav-link" href="#experiences"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m10 8 6 4-6 4V8Z"/></svg><span>Experiences</span></a>
+      <div class="nav-caption">ROBLOX</div>
+      <a class="nav-link external" href="https://www.roblox.com/communities/934104263" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4h7v7m0-7-10 10"/><path d="M20 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5"/></svg><span>Open community</span></a>
+      <div class="side-bottom"><div class="mini-card"><div class="mini-icon">↗</div><strong>Real-time insights</strong><small>Monitoring group <code>#934104263</code> every <code>10 seconds</code>.</small></div><div class="sidebar-footer">Local dashboard · v2.0</div></div>
+    </aside>
+    <main id="overview" class="content">
+      <div class="topbar"><div class="breadcrumb"><span>Workspace</span><span class="sep">/</span><span class="current">Overview</span></div><div class="toolbar"><div class="live-chip" id="status"><span class="dot"></span><span id="statusText">Connecting</span></div><button class="icon-btn" id="refreshBtn" aria-label="Refresh data now" title="Refresh now"><svg id="refreshIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.5 6"/><path d="M20 4v7h-7"/></svg><span class="label">Refresh</span></button></div></div>
+      <div class="page-head"><div><div class="eyebrow">COMMUNITY ANALYTICS</div><h1>Studio <span class="soft">overview.</span></h1><p>Monitor your entire Roblox portfolio, all in one place.</p></div><a class="community-link" href="https://www.roblox.com/communities/934104263" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4h7v7m0-7-10 10"/><path d="M20 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5"/></svg><span id="communityName">Community #934104263</span></a></div>
+      <div id="errorBanner" class="error-banner" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4m0 4h.01M10.3 4.6 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 4.6a2 2 0 0 0-3.4 0Z"/></svg><span id="errorText"></span></div>
+      <section class="kpis" aria-label="Key metrics"><article class="card kpi hero"><div class="kpi-signal"></div><div class="kpi-label"><span>Total concurrent players</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h5l4-10 4 13 3-7h2"/></svg></div><div id="total" class="kpi-main" aria-live="polite">—</div><div class="kpi-sub"><span id="totalDelta" class="delta neutral">Live portfolio CCU</span><span id="deltaLabel"></span></div></article><article class="card kpi"><div class="kpi-label"><span>Experiences tracked</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m10 8 6 4-6 4V8Z"/></svg></div><div id="gameCount" class="kpi-main sm">—</div><div class="kpi-sub">Public games in your community</div></article><article class="card kpi"><div class="kpi-label"><span>Biggest experience</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 2.7 6.2L21 11l-6.3 2.8L12 20l-2.7-6.2L3 11l6.3-2.8L12 2Z"/></svg></div><div id="topCcu" class="kpi-main sm">—</div><div id="topName" class="kpi-sub">Highest current CCU</div></article></section>
+      <section class="middle" aria-label="Traffic and top experiences"><article class="card chart-panel"><div class="panel-head"><div><div class="section-kicker">PLAYER ACTIVITY</div><h2>Concurrent player trend</h2></div><div class="range-tabs" role="group" aria-label="Chart time range"><button type="button" data-range="15" class="active">15m</button><button type="button" data-range="60">1h</button><button type="button" data-range="360">6h</button></div></div><div class="chart-info"><div class="chart-value" id="chartValue">—</div><div class="chart-change" id="chartChange">Monitoring live traffic</div></div><div class="chart-holder"><svg id="chart" viewBox="0 0 900 210" preserveAspectRatio="none" role="img" aria-label="Total CCU over time"><defs><linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8a79ff" stop-opacity=".26"/><stop offset="100%" stop-color="#8a79ff" stop-opacity="0"/></linearGradient><linearGradient id="lineGradient" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#716dfb"/><stop offset="100%" stop-color="#78e5db"/></linearGradient></defs><g id="gridLines"></g><path id="areaPath" fill="url(#areaGradient)" d=""/><path id="linePath" fill="none" stroke="url(#lineGradient)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d=""/><circle id="lastPoint" r="5" fill="#77e3da" stroke="#151b2a" stroke-width="3" style="display:none"/></svg><div id="chartEmpty" class="chart-overlay">The trend chart will build as new CCU readings arrive.</div></div><div class="chart-axis"><span id="axisStart">—</span><span id="axisMiddle">—</span><span id="axisEnd">Now</span></div><div class="chart-footer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>Readings are saved locally in this browser for up to 6 hours.</div></article><article class="card leaders"><div class="panel-head"><div><div class="section-kicker">TOP PERFORMERS</div><h2>Leading experiences</h2></div><span style="font-size:11px;color:#7b88a2;padding-top:3px">Live CCU</span></div><div id="leadersList" class="leader-list"><div class="leader-empty">Connecting to Roblox…</div></div><div class="leader-foot">Ranked by players currently online</div></article></section>
+      <section class="list-section" id="experiences"><div class="list-title"><div><h2>All experiences</h2><p>Live player counts across your community.</p></div><div class="updated" id="updated">Connecting to Roblox…</div></div><div class="card table-wrap"><div class="table-head"><span>EXPERIENCE</span><span>LIVE PLAYERS</span><span>TOTAL VISITS</span><span>CCU SHARE</span><span></span></div><div id="gameRows"><div class="empty">Loading public Roblox experiences…</div></div></div></section>
+      <footer class="foot"><span><strong>Studio Pulse</strong> · Community <strong>#934104263</strong> · Running locally on your computer</span><span>Polls every 10 seconds. Roblox may delay or cache player counts.</span></footer>
+    </main>
+  </div>
+<script>
+(() => {
+  'use strict';
+  const GROUP_ID = 934104263;
+  const POLL_INTERVAL = 10000;
+  const HISTORY_WINDOW = 6 * 60 * 60 * 1000;
+  const STORAGE_KEY = 'studio-pulse-history-' + GROUP_ID;
+  const $ = id => document.getElementById(id);
+  const pretty = n => Number(n || 0).toLocaleString('en-US');
+  const compact = n => Intl.NumberFormat('en-US', {notation:'compact',maximumFractionDigits:1}).format(n || 0);
+  const timeText = ms => new Date(ms).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  const timeWithSeconds = ms => new Date(ms).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  let loading = false;
+  let nextPoll = Date.now();
+  let latest = null;
+  let chartRange = 15;
+  let history = [];
+  try {
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    if (Array.isArray(stored)) history = stored.filter(p => p && Number.isFinite(p.t) && Number.isFinite(p.n) && p.t > Date.now() - HISTORY_WINDOW && p.t < Date.now() + 10000).slice(-2200);
+  } catch(e) { /* private browsing may disable storage */ }
+
+  function changeStatus(type, text) {
+    $('status').className = 'live-chip' + (type === 'live' ? '' : ' ' + type);
+    $('statusText').textContent = text;
+  }
+  function banner(message) {
+    $('errorBanner').classList.toggle('show', Boolean(message));
+    $('errorText').textContent = message || '';
+  }
+  function iconFor(game) {
+    if (typeof game.icon === 'string' && /^https:\/\//i.test(game.icon)) {
+      const img = document.createElement('img');
+      img.className = 'thumb';
+      img.src = game.icon;
+      img.alt = '';
+      img.loading = 'lazy';
+      img.referrerPolicy = 'no-referrer';
+      img.onerror = () => img.replaceWith(fallbackIcon(game));
+      return img;
+    }
+    return fallbackIcon(game);
+  }
+  function fallbackIcon(game) {
+    const div = document.createElement('div');
+    div.className = 'thumb';
+    div.textContent = (game.name || '?').trim().slice(0, 1).toUpperCase() || '?';
+    return div;
+  }
+  const gameUrl = game => game.rootPlaceId ? 'https://www.roblox.com/games/' + encodeURIComponent(game.rootPlaceId) : 'https://www.roblox.com/communities/' + GROUP_ID;
+  const gameLink = game => {
+    const link = document.createElement('a');
+    link.href = gameUrl(game);
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.title = 'Open ' + game.name + ' on Roblox';
+    return link;
+  };
+
+  function renderLeaders(games) {
+    const container = $('leadersList');
+    container.replaceChildren();
+    if (!games.length) {
+      const empty = document.createElement('div');
+      empty.className = 'leader-empty';
+      empty.textContent = 'No public games found.';
+      container.append(empty);
+      return;
+    }
+    for (const game of games.slice(0, 3)) {
+      const row = document.createElement('div'); row.className = 'leader-row';
+      const thumbLink = gameLink(game); thumbLink.append(iconFor(game));
+      const info = document.createElement('div'); info.className = 'leader-info';
+      const name = document.createElement('div'); name.className = 'leader-name'; name.textContent = game.name;
+      const caption = document.createElement('div'); caption.className = 'leader-caption'; caption.textContent = compact(game.visits) + ' total visits';
+      info.append(name, caption);
+      const count = document.createElement('div'); count.className = 'leader-count'; count.textContent = pretty(game.playing);
+      row.append(thumbLink, info, count); container.append(row);
+    }
+  }
+  function renderGames(games, total) {
+    const container = $('gameRows');
+    container.replaceChildren();
+    if (!games.length) {
+      const empty = document.createElement('div'); empty.className = 'empty';
+      empty.textContent = 'No public experiences are currently listed for this community.';
+      container.append(empty);
+      return;
+    }
+    games.forEach((game, idx) => {
+      const share = total > 0 ? 100 * game.playing / total : 0;
+      const row = document.createElement('div'); row.className = 'game-row';
+      const identity = document.createElement('div'); identity.className = 'game-identity';
+      const rank = document.createElement('span'); rank.className = 'number'; rank.textContent = String(idx + 1).padStart(2,'0');
+      const thumbLink = gameLink(game); thumbLink.append(iconFor(game));
+      const identityText = document.createElement('div'); identityText.className = 'identity-text';
+      const gameName = gameLink(game); gameName.className = 'game-name'; gameName.textContent = game.name;
+      const details = document.createElement('div'); details.className = 'game-details'; details.textContent = 'Universe ' + game.id;
+      identityText.append(gameName, details); identity.append(rank, thumbLink, identityText);
+      const count = document.createElement('div'); count.className = 'player-count';
+      count.textContent = pretty(game.playing);
+      const online = document.createElement('span'); online.textContent = 'online'; count.append(online);
+      const visits = document.createElement('div'); visits.className = 'visits'; visits.textContent = pretty(game.visits);
+      const shareEl = document.createElement('div'); shareEl.className = 'share';
+      const shareText = document.createElement('span'); shareText.textContent = share.toFixed(1) + '%';
+      const bar = document.createElement('div'); bar.className = 'bar';
+      const fill = document.createElement('span'); fill.style.width = share.toFixed(3) + '%'; bar.append(fill);
+      shareEl.append(shareText, bar);
+      const open = gameLink(game); open.className = 'open-btn'; open.setAttribute('aria-label', 'Open ' + game.name);
+      open.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4h7v7m0-7-10 10"/><path d="M20 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5"/></svg>';
+      row.append(identity, count, visits, shareEl, open); container.append(row);
+    });
+  }
+  function record(t, n) {
+    if (!Number.isFinite(n) || n < 0) return;
+    // Roblox often serves the same value for several refreshes; that is fine.
+    if (history.length && t - history[history.length - 1].t < 4000) return;
+    history.push({t,n});
+    history = history.filter(p => p.t >= t - HISTORY_WINDOW).slice(-2200);
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(history)); } catch(e) {}
+  }
+  function gridline(y) {
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const line = document.createElementNS(svgNS, 'line');
+    line.setAttribute('x1', '0'); line.setAttribute('x2', '900');
+    line.setAttribute('y1', y); line.setAttribute('y2', y);
+    line.setAttribute('stroke', '#30394c'); line.setAttribute('stroke-opacity', '.6');
+    line.setAttribute('stroke-dasharray', '4 7');
+    return line;
+  }
+  function renderChart() {
+    const end = Date.now(), start = end - chartRange * 60000;
+    const samples = history.filter(p => p.t >= start && p.t <= end + 1000);
+    const grid = $('gridLines'); grid.replaceChildren();
+    [25, 79, 133, 187].forEach(y => grid.append(gridline(y)));
+    $('axisStart').textContent = timeText(start);
+    $('axisMiddle').textContent = timeText((start + end) / 2);
+    $('axisEnd').textContent = 'Now';
+    const empty = $('chartEmpty');
+    const line = $('linePath'), area = $('areaPath'), point = $('lastPoint');
+    if (samples.length < 2) {
+      empty.style.display = 'flex';
+      line.setAttribute('d', ''); area.setAttribute('d', ''); point.style.display = 'none';
+      $('chartChange').textContent = samples.length ? 'Collecting more readings…' : 'No recorded readings in this range';
+      return;
+    }
+    empty.style.display = 'none';
+    const values = samples.map(p => p.n);
+    let lo = Math.min(...values), hi = Math.max(...values);
+    const padding = Math.max(10, (hi-lo)*.22, hi*.02);
+    lo = Math.max(0, lo-padding); hi += padding;
+    if (hi === lo) hi++;
+    const coords = samples.map(p => ({x: 5 + (p.t-start)/(end-start)*890, y: 184 - (p.n-lo)/(hi-lo)*159}));
+    const d = coords.map((p,i) => (i ? 'L' : 'M') + p.x.toFixed(2) + ',' + p.y.toFixed(2)).join(' ');
+    line.setAttribute('d', d);
+    const first = coords[0], last = coords[coords.length-1];
+    area.setAttribute('d', d + ' L' + last.x.toFixed(2) + ',203 L' + first.x.toFixed(2) + ',203 Z');
+    point.setAttribute('cx', last.x); point.setAttribute('cy', last.y); point.style.display = '';
+    const change = samples[samples.length - 1].n - samples[0].n;
+    $('chartChange').textContent = (change > 0 ? '+' : '') + pretty(change) + ' over selected period';
+  }
+  function showSnapshot(data) {
+    const games = Array.isArray(data.games) ? data.games : [];
+    latest = data;
+    $('total').textContent = pretty(data.total);
+    $('gameCount').textContent = pretty(data.count);
+    $('topCcu').textContent = games.length ? pretty(games[0].playing) : '0';
+    $('topName').textContent = games.length ? games[0].name : 'No public experiences';
+    $('chartValue').textContent = pretty(data.total) + ' CCU';
+    $('communityName').textContent = data.groupName || ('Community #' + GROUP_ID);
+    $('updated').textContent = 'Updated ' + timeWithSeconds(data.updatedAt*1000) + (data.stale ? ' (delayed)' : '');
+    if (data.stale) {
+      banner(data.error || 'Live updates are temporarily unavailable. Showing an earlier reading.');
+    } else {
+      banner(null);
+      record(data.updatedAt*1000, data.total);
+    }
+    const windowStart = Date.now() - 15*60*1000;
+    const past = history.find(p => p.t >= windowStart);
+    const delta = past ? data.total - past.n : 0;
+    const deltaEl = $('totalDelta');
+    deltaEl.textContent = history.length >= 2 ? (delta > 0 ? '+' : '') + pretty(delta) + ' players' : 'Watching live traffic';
+    deltaEl.className = 'delta ' + (history.length < 2 || delta === 0 ? 'neutral' : delta < 0 ? 'negative' : '');
+    $('deltaLabel').textContent = history.length >= 2 ? 'vs. up to 15m ago' : '';
+    renderChart(); renderLeaders(games); renderGames(games, data.total);
+  }
+  async function refresh() {
+    if (loading) return;
+    loading = true;
+    $('refreshBtn').disabled = true;
+    $('refreshIcon').classList.add('spin');
+    changeStatus('live','Syncing…');
+    try {
+      const response = await fetch('/api/ccu', {cache:'no-store'});
+      const data = await response.json();
+      if (!response.ok) throw Error(data.error || 'Roblox request failed.');
+      showSnapshot(data);
+      changeStatus(data.stale ? 'delayed':'live', data.stale ? 'Delayed · retry in 10s' : 'Live · 10s');
+    } catch (error) {
+      changeStatus('offline','Disconnected');
+      banner(error.message + ' Retrying automatically in 10 seconds.');
+      if (!latest) $('updated').textContent = 'Waiting for Roblox…';
+    } finally {
+      loading = false;
+      nextPoll = Date.now() + POLL_INTERVAL;
+      $('refreshBtn').disabled = false;
+      $('refreshIcon').classList.remove('spin');
+    }
+  }
+  $('refreshBtn').addEventListener('click', () => {nextPoll = Date.now()+POLL_INTERVAL;refresh();});
+  document.querySelectorAll('[data-range]').forEach(button => button.addEventListener('click', () => {
+    chartRange = Number(button.dataset.range);
+    document.querySelectorAll('[data-range]').forEach(b => b.classList.toggle('active', b === button));
+    renderChart();
+  }));
+  setInterval(() => {
+    if (!loading && Date.now() >= nextPoll) refresh();
+    if (!loading && latest && !latest.stale && $('status').className === 'live-chip') {
+      const countdown = Math.max(0, Math.ceil((nextPoll-Date.now())/1000));
+      $('statusText').textContent = 'Live · ' + countdown + 's';
+    }
+  }, 250);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && Date.now() >= nextPoll && !loading) refresh();
+  });
+  window.addEventListener('storage', event => {
+    if (event.key !== STORAGE_KEY || !event.newValue) return;
+    try {const updated = JSON.parse(event.newValue);if(Array.isArray(updated)&&updated.length > history.length){history=updated;renderChart();}} catch(e){}
+  });
+  renderChart();
+  refresh();
+})();
+</script>
+</body>
+</html>
